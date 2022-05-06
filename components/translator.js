@@ -28,8 +28,8 @@ class Translator {
     }
 
     toAmericanEnglish(text) {
-        const dict = {...britishOnly, ...reverseDict(americanToBritishSpelling) };
-        const titles = reverseDict(americanToBritishTitles)
+        const dict = {...britishOnly, ...this.reverseDict(americanToBritishSpelling) };
+        const titles = this.reverseDict(americanToBritishTitles)
         const timeRegex = /([1-9]|1[012]).[0-5][0-9]/g
         const translated = this.translate(
             text,
@@ -84,7 +84,7 @@ class Translator {
         // No matches
         if (Object.keys(matchesMap).length === 0) return null
 
-        console.log('matchesMap', matchesMap)
+        //console.log('matchesMap', matchesMap)
 
         const translation = this.replaceAll(text, matchesMap)
         const translationWithHighlights = this.replaceAllWithHighlight(text, matchesMap)
@@ -100,7 +100,7 @@ class Translator {
     replaceAllWithHighlight(text, matchesMap) {
         const re = new RegExp(Object.keys(matchesMap).join('|'), 'gi')
         return text.replace(re, matched => {
-            return `<span class="highlight">${matched.toLowerCase()}</span>`
+            return `<span class="highlight">${matchesMap[matched.toLowerCase()]}</span>`
         })
     }
 
